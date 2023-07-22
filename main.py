@@ -1,9 +1,10 @@
 
-####################################################################################################
-####################################################   Fenix  #########################################
-############################################ god's computer science #####################################
-##########################################################################################################
+#############################################################################################################################
+####################################################   Fenix  ##################################################################
+###################################################################################################################################
 
+__author__ = "Talla_Mboup"
+__email__  = "mboup.talla@ugb.edu.sn"
 
 from tkinter import *
 from tkinter import messagebox
@@ -15,14 +16,16 @@ import math,re
 
 windows = Tk()
 windows.title("Fast Fourier Transform")
-windows.geometry("1300x700")
+windows.geometry("1300x800")
 windows.config(background="#15A2A2")
-windows.resizable(0,0)   
-    
+windows.resizable(0,0)  
+
+guijk0g'oubjl
+huoj;k
     
 #####################################################################################
-####################### Cette partie gere les fonctions #########################
-###################################################################################
+####################### Cette partie gere les fonctions ##############################
+#######################################################################################
     
 def graphe2(x,sr):
     X=FFT(x)
@@ -40,14 +43,13 @@ def graphe2(x,sr):
     
     filtered_signal = fftpack.ifft(X)
     plt.figure(figsize=(12,6))
-    #new = signal.detrend(filtered_signal) #permet d'eliminer toute tendance lineaire
+    #new = signal.detrend(filtered_signal)  #permet d'eliminer toute tendance lineaire
     plt.plot(n,filtered_signal)
     plt.show()
 
     
-
+#cette fonctin definie l'expression de wn
 def wN(n,k,N):
-    #cette fonctin definie l'expression de wn
     return np.exp((-2j*np.pi*n*k)/N)
 
 def DFT(x):
@@ -61,7 +63,6 @@ def DFT(x):
     return np.dot(M, x)
 
 
-
 def FFT(x):
     """A recursive implementation of the 1D Cooley-Tukey FFT"""
     x = np.asarray(x, dtype=float)
@@ -69,14 +70,17 @@ def FFT(x):
     
     if N % 2 > 0:
         raise ValueError("size of x must be a power of 2")
-    elif N <= 32:  # this cutoff should be optimized
+    elif N <= 32: 
         return DFT(x)
     else:
-        X_even = FFT(x[::2])
-        X_odd = FFT(x[1::2])
-        factor = np.exp(-2j * np.pi * np.arange(N) / N)
-        return np.concatenate([X_even + factor[:int(N / 2)] * X_odd,X_even + factor[int(N / 2):] * X_odd])
+        X_even = FFT(x[::2])  #Permet la recperation des nombres pairs.
+        X_odd = FFT(x[1::2])  #Permet la recuperation des nombres impaires.
+        factor = np.exp(-2j*np.pi*np.arange(N) / N)
+        
+        return np.concatenate([X_even + factor[:int(N / 2)]* X_odd,X_even + factor[int(N / 2):] * X_odd])
+    
 
+#cette fonction permet de verifier si la valeur de N est une puissance de 2.
 def verif(N):
     VeriN = str(math.log(N)/math.log(2))
     print("la valeur est : ",VeriN)
@@ -104,6 +108,7 @@ def result():
         listeResult = []
         for line in FFT(x):
             listeResult.append(f"X({count}) = "+str(line)[1:-1]+"\n")
+            print(line)
             count +=1 
 
         varListe.set(listeResult)
@@ -118,8 +123,10 @@ def fCancel():
 ##definition des gos frames:en bas,a droite et gauche
 frameC=Frame(windows, bg="#15A2A2",relief=SUNKEN,bd=3)
 #frameC.pack(side=BOTTOM,padx=10,pady=20)
-frameA=Frame(windows, bg="#15A2A2",relief=SUNKEN,bd=3)
+
+frameA=Frame(windows, bg="#15A2A2",relief=SUNKEN)
 frameA.pack(padx=10,pady=20)
+
 frameB=Frame(windows, bg="#15A2A2",relief=SUNKEN,bd=3)
 #frameB.pack(side=LEFT,padx=10,pady=20)
 
@@ -132,7 +139,7 @@ frameB=Frame(windows, bg="#15A2A2",relief=SUNKEN,bd=3)
 #sous frame du frame de droite
 frameA3=Frame(frameA, bg="#15A2A2",relief=SUNKEN,bd=1)
 frameA3.pack(side=TOP,padx=20,pady=25)
-frameA2=Frame(frameA, bg="#15A2A2",relief=SUNKEN,bd=1)
+frameA2=Frame(frameA, bg="#15A2A2",relief=SUNKEN)
 frameA2.pack(side=BOTTOM,padx=20,pady=25)
 frameA0=Frame(frameA, bg="#15A2A2",relief=SUNKEN,bd=1)
 frameA0.pack(side=RIGHT,padx=20,pady=25)
@@ -167,11 +174,11 @@ R1.pack(side=RIGHT,padx=5,pady=5)
 R2 = Radiobutton(frame122, text="Entrer ", variable=var, value=2,bg="#15A2A2",highlightcolor="red") #command=sel)
 R2.pack(side=RIGHT,padx=5,pady=5)
 
-valeurEntry = Entry(frame12,bg="white",fg="black",font=("Courrier",20),width=30)  #,state=DISABLED)
+valeurEntry = Entry(frame12,bg="white",fg="black",font=("Courrier",20),width=30)
 valeurEntry.pack(padx=5,pady=5)
 
 varState = StringVar
-infLabel = Label(frameA0,bg="#15A2A2",fg="white",text="Resultat transforme de fourier",font=("Courrier",10),textvariable=varState)
+infLabel = Label(frameA0,bg="#15A2A2",fg="white",text="Resultat de la transforme de fourier",font=("Courrier",10),textvariable=varState)
 infLabel.pack(side=TOP,padx=5,pady=5)
 
 #cette partie presente certains problemes 
@@ -183,59 +190,9 @@ mylist = Listbox(frameA0, yscrollcommand=scrollbar.set,bg="white",height=9,width
 mylist.pack(side=LEFT,fill=BOTH)
 scrollbar.config(command = mylist.yview)
 
-boutonValide = Button(frameA2,text="Calculer",height=3,width=10,bg="#15A2A2",bd=5,fg="white",font=("Helvetiva",10),command=result)
+boutonValide = Button(frameA2,text="  Calculer  ",height=3,width=10,bg="#15A2A2",bd=5,fg="white",font=("Helvetiva",10),command=result)
 boutonValide.pack(side=LEFT,padx=5,pady=5)
 boutonCancel = Button(frameA2,text="Reinitialiser",height=3,width=10,bg="#15A2A2",bd=5,fg="white",font=("Helvetiva",10),command=fCancel)
 boutonCancel.pack(side=LEFT,padx=5,pady=5)
-
-
-
-
-
-####################################################################################################
-########################################## Partie Gauche ###########################################
-#####################################################################################################
-
-#sous frame du frame a gauche
-frameB3=Frame(frameB, bg="#15A2A2",relief=SUNKEN,bd=3)
-frameB3.pack(side=TOP,padx=20,pady=25)
-
-frameB2=Frame(frameB, bg="#15A2A2",relief=SUNKEN,bd=3)
-frameB2.pack(side=BOTTOM,padx=20,pady=25)
-frameB0=Frame(frameB, bg="#15A2A2",relief=SUNKEN,bd=3)
-frameB0.pack(side=RIGHT,padx=20,pady=25)
-frameB1=Frame(frameB, bg="#15A2A2",relief=SUNKEN,bd=3)
-frameB1.pack(side=LEFT,padx=20,pady=25)
-
-welcomeLabel = Label(frameB3,bg="#15A2A2",fg="white",text="Transforme de Fourier Discret Inverse",font=("Courrier",20))
-welcomeLabel.pack(padx=5,pady=5)
-
-
-
-
-infLabel = Label(frameB0,bg="#15A2A2",fg="white",text="Resultat transforme de fourier",font=("Courrier",10))
-infLabel.pack(side=TOP,padx=5,pady=5)
-scrollbar = Scrollbar(frameB0,bg="#15A2A2",width=20,highlightcolor="yellow")
-scrollbar.pack(side = LEFT, fill = Y )
-mylist = Listbox(frameB0, yscrollcommand=scrollbar.set,bg="white",height=10,font=("courier",20))
-
-for line in range(50):
-   mylist.insert(END, "line number " + str(line))
-
-mylist.pack(side=LEFT,fill=BOTH)
-scrollbar.config(command = mylist.yview)
-
-
-boutonValide2 = Button(frameB2,text="Calculer",height=3,width=10,bg="#15A2A2",bd=5,fg="white",font=("Helvetiva",10))
-boutonValide2.pack(side=LEFT,padx=5,pady=5)
-boutonCancel2 = Button(frameB2,text="Reinitialiser",height=3,width=10,bg="#15A2A2",bd=5,fg="white",font=("Helvetiva",10))
-boutonCancel2.pack(side=LEFT,padx=5,pady=5)
-
-
-####################################################################################################
-################################## Partie Gauche termine ###########################################
-#####################################################################################################
-
-
 
 windows.mainloop()
